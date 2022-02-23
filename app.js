@@ -1,4 +1,5 @@
 
+
 class Despesa{
     constructor(ano, mes, dia, tipo, descricao, valor){
         
@@ -71,9 +72,36 @@ function cadastrarDespesa(){
     )
     if(despesa.validadarDados()){
         bd.gravar(despesa)
+
+        let headerTitle = document.getElementById('exampleModalLongTitle')
+        headerTitle.className="modal-title text-success"
+        headerTitle.innerHTML='sucesso na insrção dos dados !!'
+        let modalBody = document.getElementById('modal-body')
+        modalBody.className="modal-body"
+        modalBody.innerHTML='Dados inseridos com sucesso !!!'
+        let button= document.getElementById('button')
+        button.className='btn btn-success'
+        button.innerHTML='Voltar'
+
+        $('#registraDespesa').modal('show') // exibindo modal de maneira programatica por meio da biblioteca jquerry
+
+        
         
     }else{
-        alert('dados invalidos !!')
+
+        let headerTitle = document.getElementById('exampleModalLongTitle')
+        headerTitle.className="modal-title text-danger"
+        headerTitle.innerHTML='Erro na gravação dos dados'
+        let modalBody = document.getElementById('modal-body')
+        modalBody.className="modal-body"
+        modalBody.innerHTML='Existem campos obrigatórios que não foram preenchidos !!!'
+        let button= document.getElementById('button')
+        button.className='btn btn-danger'
+        button.innerHTML='Voltar e corrigir'
+
+
+        $('#registraDespesa').modal('show') // exibindo modal de maneira programatica por meio da biblioteca jquerry
+        
     }
     
     
