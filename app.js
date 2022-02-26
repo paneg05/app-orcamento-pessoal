@@ -42,6 +42,26 @@ class Bd{
         
     
     }
+
+    recuperarTodosRegistros(){
+        // array de despesas
+        let despesas = Array()
+
+        let id = localStorage.getItem('id')
+
+        //recupera todas despesas cadastradas em localstorage
+        for(let i = 1;i<=id;i++){
+            let despesa = JSON.parse(localStorage.getItem(i))
+
+            //existe possibilidade de haver indices que foram removidos
+            if(despesa==null){
+                continue
+            }
+            despesas.push(despesa)
+        }
+        return despesas
+    }
+
 }
 
 let bd = new Bd()
@@ -75,7 +95,7 @@ function cadastrarDespesa(){
 
         let headerTitle = document.getElementById('exampleModalLongTitle')
         headerTitle.className="modal-title text-success"
-        headerTitle.innerHTML='sucesso na insrção dos dados !!'
+        headerTitle.innerHTML='sucesso na inserção dos dados !!'
         let modalBody = document.getElementById('modal-body')
         modalBody.className="modal-body"
         modalBody.innerHTML='Dados inseridos com sucesso !!!'
@@ -85,6 +105,14 @@ function cadastrarDespesa(){
 
         $('#registraDespesa').modal('show') // exibindo modal de maneira programatica por meio da biblioteca jquerry
 
+        // limpando formulario
+
+        ano.value=''
+        mes.value=''
+        dia.value=''
+        tipo.value=''
+        descricao.value='' 
+        valor.value=''
         
         
     }else{
@@ -105,6 +133,53 @@ function cadastrarDespesa(){
     }
     
     
+}
+
+
+function carregaListaDespesas() {
+
+    let despesas = Array()
+
+    despesas = bd.recuperarTodosRegistros()
+
+    let listaDespesas = document.getElementById('listaDespesas')
+
+    //percorrer o array despesas, listando cada despesa de forma dinâmica
+
+    despesas.forEach(function(d){
+
+        // criando a linha (tr)
+        let linha = listaDespesas.insertRow()
+        //criar a colunas
+        linha.insertCell(0).innerHTML=`${d.dia}/${d.mes}/${d.ano}`
+
+        switch(d.tipo){
+            case '1':
+                d.tipo ='Alimentação'
+                break
+            case '2':
+                d.tipo = 'Educação'
+                break
+            case '3':
+                d.tipo = 'Lazer'
+                break
+            case '4':
+                d.tipo = 'Saúde'
+                break
+            case '5':
+                d.tipo = 'Transporte'
+                break
+            
+
+        }
+        
+        linha.insertCell(1).innerHTML=`${d.tipo}`
+        linha.insertCell(2).innerHTML=`${d.descricao}`
+        linha.insertCell(3).innerHTML=`${d.valor}`
+    })
+
+
+
 }
 
 
