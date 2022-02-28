@@ -1,5 +1,6 @@
 
 
+
 class Despesa{
     constructor(ano, mes, dia, tipo, descricao, valor){
         
@@ -60,6 +61,47 @@ class Bd{
             despesas.push(despesa)
         }
         return despesas
+    }
+
+    pesquisar(despesa){
+
+        let despesasFiltradas = Array()
+        despesasFiltradas = this.recuperarTodosRegistros()
+
+
+        //ano
+        if(despesa.ano != ''){
+            despesasFiltradas = despesasFiltradas.filter(f=>f.ano==despesa.ano)
+        }
+        //mes
+        if(despesa.mes != ''){
+            despesasFiltradas = despesasFiltradas.filter(f=>f.mes==despesa.mes)
+        }
+        //dia
+        if(despesa.dia != ''){
+            despesasFiltradas = despesasFiltradas.filter(f=>f.dia==despesa.dia)
+        }
+        //tipo
+        if(despesa.tipo != ''){
+            despesasFiltradas = despesasFiltradas.filter(f=>f.tipo==despesa.tipo)
+        }
+        //descricao
+        if(despesa.descricao != ''){
+            despesasFiltradas = despesasFiltradas.filter(f=>f.descricao==despesa.descricao)
+        }
+        //valor
+        if(despesa.valor != ''){
+            despesasFiltradas = despesasFiltradas.filter(f=>f.valor==despesa.valor)
+        }
+        
+
+
+
+
+        console.log(despesasFiltradas)
+        
+
+
     }
 
 }
@@ -182,6 +224,16 @@ function carregaListaDespesas() {
 
 }
 
+function pesquisarDespesa(){
+    let ano = document.getElementById('ano').value
+    let mes = document.getElementById('mes').value
+    let dia = document.getElementById('dia').value
+    let descricao = document.getElementById('descricao').value
+    let valor = document.getElementById('valor').value
 
+    let despesa = new Despesa(ano,mes,dia,descricao,valor)
+    
+    bd.pesquisar(despesa)
+}
 
 
