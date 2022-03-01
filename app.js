@@ -77,28 +77,23 @@ class Bd{
         if(despesa.mes != ''){
             despesasFiltradas = despesasFiltradas.filter(f=>f.mes==despesa.mes)
         }
-        //dia
-        if(despesa.dia != ''){
+         //dia
+         if(despesa.dia != ''){
             despesasFiltradas = despesasFiltradas.filter(f=>f.dia==despesa.dia)
         }
+        
         //tipo
         if(despesa.tipo != ''){
             despesasFiltradas = despesasFiltradas.filter(f=>f.tipo==despesa.tipo)
         }
-        //descricao
-        if(despesa.descricao != ''){
-            despesasFiltradas = despesasFiltradas.filter(f=>f.descricao==despesa.descricao)
-        }
-        //valor
-        if(despesa.valor != ''){
-            despesasFiltradas = despesasFiltradas.filter(f=>f.valor==despesa.valor)
-        }
+        
+       
         
 
 
-
-
+        console.log(despesa.tipo)
         console.log(despesasFiltradas)
+        return despesasFiltradas
         
 
 
@@ -178,13 +173,16 @@ function cadastrarDespesa(){
 }
 
 
-function carregaListaDespesas() {
+function carregaListaDespesas(despesas = Array()) {
 
-    let despesas = Array()
-
-    despesas = bd.recuperarTodosRegistros()
+    
+    if(despesas.length == 0){
+        despesas = bd.recuperarTodosRegistros()
+    }
+    
 
     let listaDespesas = document.getElementById('listaDespesas')
+    listaDespesas.innerHTML=''
 
     //percorrer o array despesas, listando cada despesa de forma dinâmica
 
@@ -228,12 +226,22 @@ function pesquisarDespesa(){
     let ano = document.getElementById('ano').value
     let mes = document.getElementById('mes').value
     let dia = document.getElementById('dia').value
+    let tipo = document.getElementById('tipo').value
     let descricao = document.getElementById('descricao').value
     let valor = document.getElementById('valor').value
 
-    let despesa = new Despesa(ano,mes,dia,descricao,valor)
+    let despesa = new Despesa(ano, mes, dia, tipo, descricao, valor)
     
-    bd.pesquisar(despesa)
+    let despesas = bd.pesquisar(despesa)
+
+    carregaListaDespesas(despesas)
+
+
+    
+
+
+
+
 }
 
 
